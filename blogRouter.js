@@ -13,9 +13,6 @@ const {BlogPosts} = require('./models');
 const jsonParser = bodyParser.json();
 const app = express();
 
-// add logging output
-app.use(morgan('common'));
-
 // Create some blog posts to start with
 const blogpost1 = `
        The quick red fox jumped over the lazy brown dog.
@@ -37,7 +34,7 @@ router.get("/", (req, res) => {
 
 // React to PUT command
 router.put("/:id", jsonParser, (req, res) => {
-    const requiredFields = ['id', 'title', 'content', 'author', 'publishDate'];
+    const requiredFields = ['id', 'title', 'content', 'author'];
     for (let i=0; i<requiredFields.length; i++) {
       const field = requiredFields[i];
       if (!(field in req.body)) {
@@ -76,13 +73,13 @@ router.post("/", jsonParser, (req, res) => {
       return res.status(400).send(message);
     }
   }
-  const item = blogPosts.create(req.body.title, req.body.content, req.body.author);
+  const item = BlogPosts.create(req.body.title, req.body.content, req.body.author);
   res.status(201).json(item);
 });
 
 // React to DELETE command
 router.delete("/:id", (req, res) => {
-    blogPosts.delete(req.params.id);
+    BlogPosts.delete(req.params.id);
     console.log(`Deleted blog post \`${req.params.ID}\``);
     res.status(204).end();
   });

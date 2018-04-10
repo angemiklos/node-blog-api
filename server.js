@@ -4,7 +4,7 @@ const express = require('express');
 const morgan = require('morgan');
 
 // bring in the BlogRouter object to make it available
-const {blogRouter} = require('./blogRouter');
+const blogRouter = require('./blogRouter');
 
 // instantiate the express app
 const app = express();
